@@ -27,7 +27,7 @@
 
                     if ($user->checkCredentials($data['email'], $data['password'])) {
                         // Gerar JWT
-                        $response['jwt'] = '...';
+                        $response['jwt'] = $user->createJWT();
                     } else {
                         $response['error'] = 'Acesso negado.';
                     }

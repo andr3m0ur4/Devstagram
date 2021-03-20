@@ -3,6 +3,7 @@
     namespace Models;
 
     use \Core\Model;
+    use \Models\JWT;
 
     class User extends Model
     {
@@ -26,5 +27,11 @@
             }
 
             return false;
+        }
+
+        public function createJWT()
+        {
+            $jwt = new JWT();
+            return $jwt->create(['id_user' => $this->id_user]);
         }
     }

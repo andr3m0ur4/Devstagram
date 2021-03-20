@@ -10,7 +10,8 @@
             'dbname' => 'devstagram',
             'host' => 'localhost',
             'dbuser' => 'root',
-            'dbpass' => ''
+            'dbpass' => '',
+            'jwt_secret_key' => 'andre-moura!'
         ];
     } else {
         define('BASE_URL', 'https://meusite.com.br');
@@ -18,8 +19,7 @@
             'dbname' => 'estrutura_mvc',
             'host' => 'localhost',
             'dbuser' => 'andre-moura',
-            'dbpass' => 'andre'
+            'dbpass' => 'andre',
+            'jwt_secret_key' => 'andre-moura!'
         ];
     }
-
-    global $db;
