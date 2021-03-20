@@ -7,10 +7,10 @@
     if (ENVIRONMENT == 'development') {
         define('BASE_URL', 'http://localhost');
         $config = [
-            'dbname' => 'blog',
-            'host' => '10.0.0.104',
-            'dbuser' => 'andre-moura',
-            'dbpass' => 'andre'
+            'dbname' => 'devstagram',
+            'host' => 'localhost',
+            'dbuser' => 'root',
+            'dbpass' => ''
         ];
     } else {
         define('BASE_URL', 'https://meusite.com.br');
