@@ -9,11 +9,11 @@
     {
         public function index()
         {
-            $data = [];
+            $data = [
+                'nome' => 'André Moura',
+                'idade' => 30
+            ];
 
-            $usuarios = new Usuario();
-            $data['usuarios'] = $usuarios->getAll();
-
-            $this->loadTemplate('home', $data);
+            return $this->returnJson($data);
         }
     }
