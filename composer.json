@@ -1,0 +1,30 @@
+{
+    "name": "mvc/architecture-mvc",
+    "description": "A MVC Architecture for rapid development of an application",
+    "keywords": ["MVC", "rest", "router", "psr7"],
+    "homepage": "https://github.com/andr3m0ur4/Estrutura_MVC",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "André Moura",
+            "email": "andre.benedicto@etec.sp.gov.br",
+            "homepage": "https://www.hg-study.gq/"
+        }
+    ],
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "Controllers/",
+            "Models\\": "Models/",
+            "Core\\": "Core/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public"
+    },
+    "config": {
+        "process-timeout": 0
+    }
+}
