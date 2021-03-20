@@ -2,9 +2,18 @@
 
     global $routes;
     $routes = [
-        '/galeria/{id}' => '/galeria/abrir/:id',
-        //'/galeria/{id}/{titulo}' => '/galeria/abrir/:id/:titulo',
-        '/news/{id}' => '/noticia/abrir/:id',
-        '/home' => '/home/index',
-        //'/{titulo}' => '/noticia/abrirTitulo/:titulo'
+        'users/login' => '/users/login',
+        'users/new' => '/users/register',
+        'users/{id}' => '/users/view/:id',
+        'users/{id}/feed' => '/users/feed/:id',
+        'users/{id}/photos' => '/users/photos/:id',
+        'users/{id}/follow' => '/users/follow/:id',
+        'users/{id}/unfollow' => '/users/follow/:id',
+
+        'photos/random' => '/photos/random',
+        'photos/new' => '/photos/insert',
+        'photos/{id}' => '/photos/view/:id',
+        'photos/{id}/comment' => '/photos/comment/:id',
+        'photos/{id}/like' => '/photos/like/:id',
+        'photos/{id}/dislike' => '/photos/like/:id',
     ];
