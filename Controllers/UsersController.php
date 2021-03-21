@@ -104,6 +104,7 @@
                         break;
 
                     case 'PUT':
+                        $response['error'] = $user->editUser($id, $data);
                         break;
 
                     case 'DELETE':

@@ -83,6 +83,50 @@
             return false;
         }
 
+        public function editUser($id, $data)
+        {
+            if ($id === $this->getId()) {
+                $toChange = [];
+                $user = $this->getUser($id);
+
+                if (!empty($data['name'])) {
+                    $user->name = $data['name'];
+                }
+                if (!empty($data['email'])) {
+                    if (filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                        if (!$this->emailExists($data['email'])) {
+                            $user->email = $data['email'];
+                        } else {
+                            return 'Novo e-mail já existe.';
+                        }
+                    } else {
+                        return 'E-mail inválido!';
+                    }
+                }
+                if (!empty($data['password'])) {
+                    $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+                }
+
+                if (count($data) > 0) {
+                    $sql = "UPDATE users SET
+                            name = :name, email = :email, password = :password
+                        WHERE id = :id";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(':id', $id);
+                    $sql->bindValue(':name', $user->name);
+                    $sql->bindValue(':email', $user->email);
+                    $sql->bindValue(':password', $user->password);
+                    $sql->execute();
+
+                    return '';
+                }
+
+                return 'Preencha os dados corretamente!';
+            }
+
+            return 'Não é permitido editar outro usuário.';
+        }
+
         public function createJWT()
         {
             $jwt = new JWT();
