@@ -15,7 +15,7 @@
         public function login()
         {
             $response = [
-                'error' => false
+                'error' => ''
             ];
 
             $method = $this->getMethod();
@@ -44,7 +44,7 @@
         public function register()
         {
             $response = [
-                'error' => false
+                'error' => ''
             ];
 
             $method = $this->getMethod();
@@ -68,6 +68,47 @@
                 }
             } else {
                 $response['error'] = 'Método de requisição incompatível.';
+            }
+
+            return $this->returnJson($response);
+        }
+
+        public function view($id)
+        {
+            $response = [
+                'error' => '',
+                'logged' => false
+            ];
+
+            $method = $this->getMethod();
+            $data = $this->getRequestData();
+            $token = $_SERVER['HTTP_JWT'];
+
+            $user = new User();
+
+            if (!empty($token) && $user->validateJWT($token)) {
+                $response['logged'] = true;
+                $response['thats_me'] = false;
+
+                if ($id == $user->getId()) {
+                    $response['thats_me'] = true;
+                }
+
+                switch ($method) {
+                    case 'GET':
+                        break;
+
+                    case 'PUT':
+                        break;
+
+                    case 'DELETE':
+                        break;
+
+                    default:
+                        $response['error'] = "Método $method não disponível.";
+                }
+            } else {
+                $response['error'] = 'Acesso negado.';
             }
 
             return $this->returnJson($response);

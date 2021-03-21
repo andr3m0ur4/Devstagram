@@ -9,6 +9,11 @@
     {
         private $id_user;
 
+        public function getId()
+        {
+            return $this->id_user;
+        }
+
         public function create($data)
         {
             if (!$this->emailExists($data['email'])) {
@@ -53,6 +58,19 @@
         {
             $jwt = new JWT();
             return $jwt->create(['id_user' => $this->id_user]);
+        }
+
+        public function validateJWT($token)
+        {
+            $jwt = new JWT();
+            $value = $jwt->validate($token);
+
+            if (isset($value->id_user)) {
+                $this->id_user = $value->id_user;
+                return true;
+            }
+
+            return false;
         }
 
         private function emailExists($email)
