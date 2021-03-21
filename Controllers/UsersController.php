@@ -96,6 +96,11 @@
 
                 switch ($method) {
                     case 'GET':
+                        $response['data'] = $user->getUser($id);
+
+                        if (count((array) $response['data']) === 0) {
+                            $response['error'] = 'Usuário não existe.';
+                        }
                         break;
 
                     case 'PUT':

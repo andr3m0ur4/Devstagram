@@ -4,6 +4,7 @@
 
     use \Core\Model;
     use \Models\JWT;
+    use \Models\Photo;
 
     class User extends Model
     {
@@ -12,6 +13,34 @@
         public function getId()
         {
             return $this->id_user;
+        }
+
+        public function getUser($id)
+        {
+            $data = [];
+
+            $sql = "SELECT * FROM users WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+
+            if ($sql->rowCount() > 0) {
+                $data = $sql->fetch(\PDO::FETCH_OBJ);
+
+                $photo = new Photo();
+
+                if (!empty($data->avatar)) {
+                    $data->avatar = "/media/avatar/{$data->avatar}";
+                } else {
+                    $data->avatar = '/media/avatar/default.jpg';
+                }
+
+                $data->following = $this->getFollowingCount($id);
+                $data->followers = $this->getFollowersCount($id);
+                $data->photos_count = $photo->getPhotosCount($id);
+            }
+
+            return $data;
         }
 
         public function create($data)
@@ -85,5 +114,27 @@
             }
 
             return false;
+        }
+
+        public function getFollowingCount($id_user)
+        {
+            $sql = "SELECT COUNT(*) AS counter FROM following WHERE id_user_following = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':id', $id_user);
+            $sql->execute();
+            $result = $sql->fetch(\PDO::FETCH_OBJ);
+
+            return $result->counter;
+        }
+
+        public function getFollowersCount($id_user)
+        {
+            $sql = "SELECT COUNT(*) AS counter FROM following WHERE id_user_followed = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':id', $id_user);
+            $sql->execute();
+            $result = $sql->fetch(\PDO::FETCH_OBJ);
+
+            return $result->counter;
         }
     }
