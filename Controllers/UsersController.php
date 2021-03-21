@@ -108,6 +108,7 @@
                         break;
 
                     case 'DELETE':
+                        $response['error'] = $user->delete($id);
                         break;
 
                     default:

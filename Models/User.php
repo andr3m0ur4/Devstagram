@@ -127,6 +127,28 @@
             return 'Não é permitido editar outro usuário.';
         }
 
+        public function delete($id)
+        {
+            if ($id === $this->getId()) {
+                $photo = new Photo();
+                $photo->deleteAll($id);
+
+                $sql = "DELETE FROM following WHERE id_user_following = :id OR id_user_followed = :id";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(':id', $id);
+                $sql->execute();
+
+                $sql = "DELETE FROM users WHERE id = :id";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(':id', $id);
+                $sql->execute();
+
+                return '';
+            } else {
+                return 'Não é permitido excluir outro usuário.';
+            }
+        }
+
         public function createJWT()
         {
             $jwt = new JWT();
